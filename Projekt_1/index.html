@@ -73,16 +73,30 @@
           ballReset()
         }
 
-        let playerpaddleTop = paddle1Y
-        let playerpaddleBottom = paddle1Y + paddleHeight
-        let playerpaddleLeft = paddleDistFromEdge
-        let playerpaddleRight = paddleDistFromEdge + paddleThickness
+        let playerPaddleTop = paddle1Y
+        let playerPaddleBottom = paddle1Y + paddleHeight
+        let playerPaddleLeft = paddleDistFromEdge
+        let playerPaddleRight = paddleDistFromEdge + paddleThickness
 
         if (
-          ballY >= playerpaddleTop &&
-          ballY <= playerpaddleBottom &&
-          ballX >= playerpaddleLeft &&
-          ballX <= playerpaddleRight
+          ballY >= playerPaddleTop &&
+          ballY <= playerPaddleBottom &&
+          ballX >= playerPaddleLeft &&
+          ballX <= playerPaddleRight
+        ) {
+          ballSpeedX = -ballSpeedX
+        }
+
+        let opponentPaddleTop = paddle1Y
+        let opponentPaddleBottom = paddle1Y + paddleHeight
+        let opponentPaddleLeft = canvas.width - paddleDistFromEdge - paddleThickness
+        let opponentPaddleRight = canvas.width - paddleDistFromEdge
+
+        if (
+          ballY >= opponentPaddleTop &&
+          ballY <= opponentPaddleBottom &&
+          ballX >= opponentPaddleLeft &&
+          ballX <= opponentPaddleRight
         ) {
           ballSpeedX = -ballSpeedX
         }
