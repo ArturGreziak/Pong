@@ -6,7 +6,12 @@
     <title>Document</title>
   </head>
   <body>
-    <canvas id="gameCanvas" width="800" height="600" style="display: block; margin: 100px auto;"></canvas>
+    <canvas
+      id="gameCanvas"
+      width="800"
+      height="600"
+      style="display: block; margin: 100px auto;"
+    ></canvas>
 
     <script>
       let canvas, canvasContext
@@ -16,31 +21,30 @@
       let ballSpeedY = 3
 
       let paddle1Y = 300
+      let paddle2Y = 300
       const paddleHeight = 100
       const paddleDistFromEdge = 10
       const paddleThickness = 10
-
-
 
       window.onload = () => {
         canvas = document.querySelector('#gameCanvas')
         canvasContext = canvas.getContext('2d')
 
-        canvas.addEventListener("mousemove", (event) => {
+        canvas.addEventListener('mousemove', (event) => {
           let mousePos = calculateMousePosition(event)
-          paddle1Y = mousePos.y - paddleHeight/2
+          paddle2Y = mousePos.y - paddleHeight / 2
         })
 
-          setInterval(() => {
-            moveEveryhing()
+        setInterval(() => {
+          moveEveryhing()
           drawEverything()
-          }, 1000 / 60)
+        }, 1000 / 60)
       }
 
       const ballReset = () => {
-        ballSpeedX = - ballSpeedX
-        ballX = canvas.width/2
-        ballY = canvas.height/2
+        ballSpeedX = -ballSpeedX
+        ballX = canvas.width / 2
+        ballY = canvas.height / 2
       }
 
       const calculateMousePosition = (event) => {
@@ -50,46 +54,65 @@
         let mouseX = event.clientX - gameRect.left - root.scrollLeft
         let mouseY = event.clientY - gameRect.top - root.scrollTop
 
-        return {x: mouseX, y: mouseY}
+        return { x: mouseX, y: mouseY }
       }
 
       const moveEveryhing = () => {
         ballX = ballX + ballSpeedX
         ballY = ballY + ballSpeedY
-        if(ballY < 0){
-          ballSpeedY = - ballSpeedY
+        if (ballY < 0) {
+          ballSpeedY = -ballSpeedY
         }
-        if(ballY > canvas.height) {
-           ballSpeedY = - ballSpeedY
+        if (ballY > canvas.height) {
+          ballSpeedY = -ballSpeedY
         }
-        if(ballX < 0){
-           ballReset()
+        if (ballX < 0) {
+          ballReset()
         }
-        if(ballX > canvas.width) {
-           ballSpeedX = - ballSpeedX
+        if (ballX > canvas.width) {
+          ballReset()
         }
 
-        let paddleTop = paddle1Y
-        let paddleBottom = paddle1Y + paddleHeight
-        let paddleLeft = paddleDistFromEdge
-        let paddleRight = paddleDistFromEdge + paddleThickness
+        let playerpaddleTop = paddle1Y
+        let playerpaddleBottom = paddle1Y + paddleHeight
+        let playerpaddleLeft = paddleDistFromEdge
+        let playerpaddleRight = paddleDistFromEdge + paddleThickness
 
-        if(ballY >= paddleTop && ballY <= paddleBottom && ballX >= paddleLeft && ballX <= paddleRight){
-             ballSpeedX = - ballSpeedX
-           }
-
+        if (
+          ballY >= playerpaddleTop &&
+          ballY <= playerpaddleBottom &&
+          ballX >= playerpaddleLeft &&
+          ballX <= playerpaddleRight
+        ) {
+          ballSpeedX = -ballSpeedX
+        }
+        
       }
 
       const drawEverything = () => {
-
         // narysuj tło i "odśwież ekran"
-        drawRectangle(0,0, canvas.width, canvas.height, 'black')
+        drawRectangle(0, 0, canvas.width, canvas.height, 'black')
 
         // narysuj piłkę
         drawCircle(ballX, ballY, 10, 'red')
-        
-        // narysuj paletkę
-        drawRectangle(paddleDistFromEdge, paddle1Y, paddleThickness, paddleHeight, 'white')
+
+        // narysuj paletkę gracza
+        drawRectangle(
+          paddleDistFromEdge,
+          paddle1Y,
+          paddleThickness,
+          paddleHeight,
+          'white',
+        )
+
+        // narysuj paletkę przeciwnika
+        drawRectangle(
+          canvas.width - paddleThickness - paddleDistFromEdge,
+          paddle2Y,
+          paddleThickness,
+          paddleHeight,
+          'white',
+        )
       }
 
       const drawRectangle = (posX, posY, width, height, color) => {
@@ -100,11 +123,9 @@
       const drawCircle = (centerX, centerY, radius, color) => {
         canvasContext.fillStyle = 'red'
         canvasContext.beginPath()
-        canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2);
+        canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2)
         canvasContext.fill()
-
       }
-    
     </script>
   </body>
 </html>
