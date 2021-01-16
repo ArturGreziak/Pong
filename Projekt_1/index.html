@@ -26,13 +26,16 @@
       const paddleDistFromEdge = 10
       const paddleThickness = 10
 
+      let playerScore = 0
+      let computerScore = 0
+
       window.onload = () => {
         canvas = document.querySelector('#gameCanvas')
         canvasContext = canvas.getContext('2d')
 
         canvas.addEventListener('mousemove', (event) => {
           let mousePos = calculateMousePosition(event)
-          paddle2Y = mousePos.y - paddleHeight / 2
+          paddle1Y = mousePos.y - paddleHeight / 2
         })
 
         setInterval(() => {
@@ -57,9 +60,22 @@
         return { x: mouseX, y: mouseY }
       }
 
+      const computerMovement = () => {
+        let paddleCenter = paddle2Y + paddleHeight / 2
+        if(paddleCenter < ballY - 10){
+          paddle2Y += 6
+        }else if(paddleCenter > ballY + 10){
+          paddle2Y -= 6
+        }
+
+      }
+
       const moveEveryhing = () => {
-        ballX = ballX + ballSpeedX
-        ballY = ballY + ballSpeedY
+
+        computerMovement()
+
+        ballX += ballSpeedX
+        ballY += ballSpeedY
         if (ballY < 0) {
           ballSpeedY = -ballSpeedY
         }
@@ -67,9 +83,11 @@
           ballSpeedY = -ballSpeedY
         }
         if (ballX < 0) {
+          computerScore ++
           ballReset()
         }
         if (ballX > canvas.width) {
+          playerScore ++
           ballReset()
         }
 
@@ -127,6 +145,11 @@
           paddleHeight,
           'white',
         )
+
+        // wynik 
+        canvasContext.fillText(playerScore, 100, 100)
+        canvasContext.fillText(computerScore, 700, 100)
+
       }
 
       const drawRectangle = (posX, posY, width, height, color) => {
