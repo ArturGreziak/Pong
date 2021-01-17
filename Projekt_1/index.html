@@ -39,15 +39,13 @@
         })
 
         setInterval(() => {
-          moveEveryhing()
+          moveEverything()
           drawEverything()
         }, 1000 / 60)
       }
 
       const ballReset = () => {
-        if(playerScore >= winningScore || computerScore >= winningScore){
-        computerScore = 0
-      }
+        
         ballSpeedX = -ballSpeedX
         ballX = canvas.width / 2
         ballY = canvas.height / 2
@@ -65,15 +63,15 @@
 
       const computerMovement = () => {
         let paddleCenter = paddle2Y + paddleHeight / 2
-        if(paddleCenter < ballY - 10){
-          paddle2Y += 6
-        }else if(paddleCenter > ballY + 10){
-          paddle2Y -= 6
+        if(paddleCenter < ballY){
+          paddle2Y += 7
+        }else if(paddleCenter > ballY){
+          paddle2Y -= 7
         }
 
       }
 
-      const moveEveryhing = () => {
+      const moveEverything = () => {
 
         computerMovement()
 
@@ -110,8 +108,8 @@
           ballSpeedY = diffY * 0.33
         }
 
-        let opponentPaddleTop = paddle1Y
-        let opponentPaddleBottom = paddle1Y + paddleHeight
+        let opponentPaddleTop = paddle2Y
+        let opponentPaddleBottom = paddle2Y + paddleHeight
         let opponentPaddleLeft = canvas.width - paddleDistFromEdge - paddleThickness
         let opponentPaddleRight = canvas.width - paddleDistFromEdge
 
