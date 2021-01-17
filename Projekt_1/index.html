@@ -45,11 +45,14 @@
       }
 
       const ballReset = () => {
+        if(playerScore >= winningScore || computerScore >= winningScore){
+        computerScore = 0
+      }
         ballSpeedX = -ballSpeedX
         ballX = canvas.width / 2
         ballY = canvas.height / 2
       }
-
+      
       const calculateMousePosition = (event) => {
         let gameRect = canvas.getBoundingClientRect()
         let root = document.documentElement
@@ -103,6 +106,8 @@
           ballX <= playerPaddleRight
         ) {
           ballSpeedX = -ballSpeedX
+          let diffY = ballY - (paddle1Y + paddleHeight/2)
+          ballSpeedY = diffY * 0.33
         }
 
         let opponentPaddleTop = paddle1Y
@@ -117,6 +122,8 @@
           ballX <= opponentPaddleRight
         ) {
           ballSpeedX = -ballSpeedX
+          let diffY = ballY - (paddle2Y + paddleHeight/2)
+          ballSpeedY = diffY * 0.33
         }
         
       }
